@@ -63,4 +63,4 @@ function sendTextMessage(sender, text) {
     })
 }
 
-const token = "EAAaD5sroCZCsBAKnSZCW6cKGnSORLs4i5FAo61rRyBXiLqVmPo3Ud7dabhHO6Dawv5baeZC8NarVUvV7gs4MAx32uDh7NcoPaoOrhqciOzZCZA9tBzyl6SdourtRB6HhNLpz67UIzJdR2jpPHf0ZBnyJXCVFFWvCnYxaZCZBCF94HAZDZD"
+const token = "EAATfBxAxmgUBAKfNj83fyrzZBZBU639QEPubGTZBmuJj7SZBOoCA5tLAQgYAI2tpZBsDJZCmZCK5vBoRaJxX7Fzeikrz9YS84ARk5e74eMKhhRfI3RfeRbhUGscOg9cNbGdBztVXbKSfTTGZCQz3fba79cvQppAQiPATlnXTAOBi7QZDZD"
