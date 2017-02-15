@@ -37,23 +37,23 @@ app.post('/webhook/', function (req, res) {
     let event = req.body.entry[0].messaging[i]
     let sender = event.sender.id;
 
-    // Checking if user exists in db
-    let req = {
-      url: 'http://bot-parse.herokuapp.com/parse/classes/FacebookUser',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Parse-Application-Id': 'botparse1967',
-        'X-Parse-Master-Key': 'botparsemasterkey'
-      },
-      method: 'POST',
-      formData: {
-        facebookId: event.sender.id
-      }
-    };
-
-    request(req, function(error, response, body){
-
-    });
+    // // Checking if user exists in db
+    // let req = {
+    //   url: 'http://bot-parse.herokuapp.com/parse/classes/FacebookUser',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     'X-Parse-Application-Id': 'botparse1967',
+    //     'X-Parse-Master-Key': 'botparsemasterkey'
+    //   },
+    //   method: 'POST',
+    //   formData: {
+    //     facebookId: event.sender.id
+    //   }
+    // };
+    //
+    // request(req, function(error, response, body){
+    //
+    // });
     if (event.message && event.message.text) {
       let text = event.message.text
       if (text === 'Generic') {
