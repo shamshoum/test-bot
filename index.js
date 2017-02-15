@@ -71,23 +71,23 @@ app.post('/webhook/', function (req, res) {
     var user = new FacebookUser();
     user.save(sender);
 
-    // Checking if user exists in db
-    // var req = {
-    //   url: 'http://bot-parse.herokuapp.com/parse/classes/facebookuser',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     'X-Parse-Application-Id': 'botparse1967',
-    //     'X-Parse-Master-Key': 'botparsemasterkey'
-    //   },
-    //   method: 'POST',
-    //   qs: {
-    //     facebookId: sender
-    //   }
-    // };
-    //
-    // request(req, function(error, response, body){
-    //
-    // });
+    Checking if user exists in db
+    var req = {
+      url: 'http://bot-parse.herokuapp.com/parse/classes/facebookuser',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Parse-Application-Id': 'botparse1967',
+        'X-Parse-Master-Key': 'botparsemasterkey'
+      },
+      method: 'POST',
+      formData: {
+        facebookId: "Testing"
+      }
+    };
+
+    request(req, function(error, response, body){
+
+    });
 
     if (event.message && event.message.text) {
       let text = event.message.text
