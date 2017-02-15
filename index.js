@@ -39,7 +39,7 @@ app.post('/webhook/', function (req, res) {
 
     // Checking if user exists in db
     let req = {
-      url: 'http://bot-parse.herokuapp.com/parse/classes/FacebookUser',
+      url: 'http://bot-parse.herokuapp.com/parse/classes/facebookuser',
       headers: {
         'Content-Type': 'application/json',
         'X-Parse-Application-Id': 'botparse1967',
