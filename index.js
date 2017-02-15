@@ -14,20 +14,21 @@ class FacebookUser extends Parse.Object {
     // Pass the ClassName to the Parse.Object constructor
     super('FacebookUser');
     this.set('facebookId', userId)
-  }
-
-  exists() {
     var query = new Parse.Query(this);
-    query.equalTo("facebookId", this.get("facebookId"));
+    query.equalTo("facebookId", userId);
     query.first({
       success: function(result) {
         console.log(result);
-        return true;
+        this.exists = true;
       },
       error: function(error) {
-        alert("Error: " + error.code + " " + error.message);
+        this.exists = false;
       }
     });
+  }
+
+  exists() {
+    return this.exists;
   }
 
   saveUser() {
@@ -66,8 +67,9 @@ app.get('/', function (req, res) {
 app.get('/webhook/', function (req, res) {
   if (req.query['hub.verify_token'] === 'my_voice_is_my_password_verify_me') {
     res.send(req.query['hub.challenge'])
+  } else {
+    res.send('Error, wrong token')
   }
-  res.send('Error, wrong token')
 })
 
 // Spin up the server
@@ -76,14 +78,16 @@ app.listen(app.get('port'), function() {
 })
 
 app.post('/webhook/', function (req, res) {
+  console.log('got message');
   let messaging_events = req.body.entry[0].messaging
+  console.log(req.body.entry[0].messaging);
   for (let i = 0; i < messaging_events.length; i++) {
     let event = req.body.entry[0].messaging[i]
     let sender = event.sender.id;
 
     if (event.message && event.message.text) {
-      var user = new FacebookUser('3432');
-      if(user.getUserById()) {
+      var user = new FacebookUser(sender);
+      if(user.exists()) {
         // User Exists
         sendTextMessage(sender, "You already exist");
       } else {
