@@ -47,7 +47,7 @@ app.post('/webhook/', function (req, res) {
       },
       method: 'POST',
       data: {
-        facebookId: sender
+        facebookId: event.sender.id
       }
     };
 
