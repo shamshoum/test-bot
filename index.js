@@ -16,13 +16,13 @@ class FacebookUser extends Parse.Object {
     this.set('facebookId', userId)
   }
 
-  getUserById() {
+  exists() {
     var query = new Parse.Query(this);
     query.equalTo("facebookId", this.get("facebookId"));
     query.first({
       success: function(result) {
         console.log(result);
-        return result;
+        return true;
       },
       error: function(error) {
         alert("Error: " + error.code + " " + error.message);
