@@ -38,8 +38,8 @@ app.post('/webhook/', function (req, res) {
     let sender = event.sender.id;
 
     // Checking if user exists in db
-    var req = {
-      url: 'http://bot-parse.herokuapp.com/parse/classes/facebookuser',
+    let req = {
+      url: 'http://bot-parse.herokuapp.com/parse/classes/FacebookUser',
       headers: {
         'Content-Type': 'application/json',
         'X-Parse-Application-Id': 'botparse1967',
