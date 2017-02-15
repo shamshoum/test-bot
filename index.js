@@ -39,7 +39,6 @@ app.post('/webhook/', function (req, res) {
 
     // Checking if user exists in db
     var req = {
-      /1/classes/<className>
       url: 'http://bot-parse.herokuapp.com/parse/classes/facebookuser',
       headers: {
         'Content-Type': 'application/json',
@@ -47,10 +46,10 @@ app.post('/webhook/', function (req, res) {
         'X-Parse-Master-Key': 'botparsemasterkey'
       },
       method: 'POST',
-      dataL: {
+      data: {
         facebookId: sender
       }
-    }
+    };
     if (event.message && event.message.text) {
       let text = event.message.text
       if (text === 'Generic') {
