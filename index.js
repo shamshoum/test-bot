@@ -10,16 +10,28 @@ Parse.serverURL = 'http://bot-parse.herokuapp.com/parse';
 Parse.initialize("botparse1967");
 
 class FacebookUser extends Parse.Object {
-  constructor() {
+  constructor(userId) {
     // Pass the ClassName to the Parse.Object constructor
     super('FacebookUser');
+    this.set('facebookId', userId)
   }
 
-  saveUser(userId) {
+  getUserById() {
+    var query = new Parse.Query(this);
+    query.equalTo("facebookId", this.get("facebookId"));
+    query.first({
+      success: function(result) {
+        console.log(result);
+        return result;
+      },
+      error: function(error) {
+        alert("Error: " + error.code + " " + error.message);
+      }
+    });
+  }
 
-    var facebookUser = new FacebookUser();
-    facebookUser.set('facebookId', userId);
-    facebookUser.save(null, {
+  saveUser() {
+    this.save(null, {
       success: function(gameScore) {
         // Execute any logic that should take place after the object is saved.
         // alert('New object created with objectId: ' + gameScore.id);
@@ -69,16 +81,19 @@ app.post('/webhook/', function (req, res) {
     let event = req.body.entry[0].messaging[i]
     let sender = event.sender.id;
 
-    var user = new FacebookUser();
-    user.saveUser(sender);
-
     if (event.message && event.message.text) {
-      let text = event.message.text
-      if (text === 'Generic') {
-        sendGenericMessage(sender)
-        continue
+      var user = new FacebookUser('3432');
+      if(user.getUserById()) {
+        // User Exists
+        sendTextMessage(sender, "You already exist");
+      } else {
+        let text = event.message.text
+        if (text === 'Generic') {
+          sendGenericMessage(sender)
+          continue
+        }
+        sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
       }
-      sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
     }
   }
   res.sendStatus(200)
