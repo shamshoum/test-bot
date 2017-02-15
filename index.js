@@ -16,22 +16,23 @@ class FacebookUser extends Parse.Object {
   }
 
   saveUser(userId) {
+
     var facebookUser = new FacebookUser();
     facebookUser.set('facebookId', userId);
     facebookUser.save(null, {
       success: function(gameScore) {
         // Execute any logic that should take place after the object is saved.
         // alert('New object created with objectId: ' + gameScore.id);
+        console.log(gameScore);
       },
       error: function(gameScore, error) {
         // Execute any logic that should take place if the save fails.
         // error is a Parse.Error with an error code and message.
         // alert('Failed to create new object, with error code: ' + error.message);
+        console.log('failed saving');
       }
     });
   }
-
-
 }
 
 Parse.Object.registerSubclass('FacebookUser', FacebookUser);
@@ -69,25 +70,7 @@ app.post('/webhook/', function (req, res) {
     let sender = event.sender.id;
 
     var user = new FacebookUser();
-    user.save(sender);
-
-    //Checking if user exists in db
-    var req = {
-      url: 'http://bot-parse.herokuapp.com/parse/classes/facebookuser',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Parse-Application-Id': 'botparse1967',
-        'X-Parse-Master-Key': 'botparsemasterkey'
-      },
-      method: 'POST',
-      data: {
-        "facebookId" : "Testing"
-      }
-    };
-
-    request(req, function(error, response, body){
-
-    });
+    user.saveUser(sender);
 
     if (event.message && event.message.text) {
       let text = event.message.text
