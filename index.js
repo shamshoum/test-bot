@@ -80,7 +80,7 @@ app.post('/webhook/', function (req, res) {
         'X-Parse-Master-Key': 'botparsemasterkey'
       },
       method: 'POST',
-      formData: {
+      data: {
         "facebookId" : "Testing"
       }
     };
