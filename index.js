@@ -71,7 +71,7 @@ app.post('/webhook/', function (req, res) {
     var user = new FacebookUser();
     user.save(sender);
 
-    Checking if user exists in db
+    //Checking if user exists in db
     var req = {
       url: 'http://bot-parse.herokuapp.com/parse/classes/facebookuser',
       headers: {
