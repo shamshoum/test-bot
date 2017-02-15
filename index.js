@@ -50,6 +50,10 @@ app.post('/webhook/', function (req, res) {
         facebookId: sender
       }
     };
+
+    request(req, function(error, response, body){
+
+    });
     if (event.message && event.message.text) {
       let text = event.message.text
       if (text === 'Generic') {
