@@ -4,6 +4,37 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const request = require('request')
 const app = express();
+const Parse = require('parse/node');
+
+Parse.serverURL = 'http://bot-parse.herokuapp.com/parse';
+Parse.initialize("botparse1967");
+
+class FacebookUser extends Parse.Object {
+  constructor() {
+    // Pass the ClassName to the Parse.Object constructor
+    super('FacebookUser');
+  }
+
+  saveUser(userId) {
+    var facebookUser = new FacebookUser();
+    facebookUser.set('facebookId', userId);
+    facebookUser.save(null, {
+      success: function(gameScore) {
+        // Execute any logic that should take place after the object is saved.
+        // alert('New object created with objectId: ' + gameScore.id);
+      },
+      error: function(gameScore, error) {
+        // Execute any logic that should take place if the save fails.
+        // error is a Parse.Error with an error code and message.
+        // alert('Failed to create new object, with error code: ' + error.message);
+      }
+    });
+  }
+
+
+}
+
+Parse.Object.registerSubclass('FacebookUser', FacebookUser);
 
 app.set('port', (process.env.PORT || 5000))
 
@@ -37,23 +68,26 @@ app.post('/webhook/', function (req, res) {
     let event = req.body.entry[0].messaging[i]
     let sender = event.sender.id;
 
+    var user = new FacebookUser();
+    user.save(sender);
+
     // Checking if user exists in db
-    var req = {
-      url: 'http://bot-parse.herokuapp.com/parse/classes/facebookuser',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Parse-Application-Id': 'botparse1967',
-        'X-Parse-Master-Key': 'botparsemasterkey'
-      },
-      method: 'POST',
-      qs: {
-        facebookId: sender
-      }
-    };
-
-    request(req, function(error, response, body){
-
-    });
+    // var req = {
+    //   url: 'http://bot-parse.herokuapp.com/parse/classes/facebookuser',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     'X-Parse-Application-Id': 'botparse1967',
+    //     'X-Parse-Master-Key': 'botparsemasterkey'
+    //   },
+    //   method: 'POST',
+    //   qs: {
+    //     facebookId: sender
+    //   }
+    // };
+    //
+    // request(req, function(error, response, body){
+    //
+    // });
 
     if (event.message && event.message.text) {
       let text = event.message.text
